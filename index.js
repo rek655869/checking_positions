@@ -2,7 +2,7 @@
 // @name         Проверка должностей
 // @author       rek655869
 // @license      MIT
-// @version      2.0.0-beta
+// @version      2.0.0-beta1
 // @match        https://catwar.su/blog*
 // @match        https://catwar.net/blog*
 // @match        https://catwar.su/my_clan/link
@@ -360,7 +360,7 @@
 
     let $deletedInput = $('<input>')
         .attr({type: 'text', id: 'check_pos-deleted-input'})
-        .val(noName.map(player => player.id).join(', '));
+        .val(noName.map(player => player.id).join(' '));
 
     $resultContainer
         .append($deletedCheckbox)
@@ -383,7 +383,7 @@
 
     let $deletedIds = $('#check_pos-deleted-input');
     if ($deletedIds.val()) {
-      ids.concat($deletedIds.val().split(' '))
+      ids = ids.concat($deletedIds.val().split(' '))
     }
 
     let uniqueIds = Array.from(new Set(ids.filter(id => id)));
@@ -408,7 +408,7 @@
 
     let $deletedIds = $('#check_pos-deleted-input');
     if ($deletedIds.val()) {
-      idNamePairs.concat($deletedIds.val().split(' ').map(id => `${id}; `));
+      idNamePairs = idNamePairs.concat($deletedIds.val().split(' ').map(id => `${id}; `));
     }
 
     let uniquePairs = Array.from(new Set(idNamePairs.filter(pair => pair)));
