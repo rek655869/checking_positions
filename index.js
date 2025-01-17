@@ -7,8 +7,7 @@
 // @match        https://catwar.net/blog*
 // @match        https://catwar.su/my_clan/link
 // @match        https://catwar.net/my_clan/link
-// @require      http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
-// @grant        none
+// @require      https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js
 // ==/UserScript==
 (function () {
   'use strict';
@@ -174,30 +173,30 @@
 
     if (location === 'blog') {
       // учитывать link
-      let checkbox1 = $('<input>')
+      let $checkbox1 = $('<input>')
           .attr({type: 'checkbox', id: 'check_pos-link'})
           .prop('checked', $settings.link)
           .on('change', function () {
             $settings.link = $(this).is(':checked');
             saveSettings();
           });
-      let label1 = $('<label></label>').attr({for: 'check_pos-link'}).text('Учитывать [link...]');
-      $container.append(checkbox1).append(label1).append('<br>');
+      let $label1 = $('<label></label>').attr({for: 'check_pos-link'}).text('Учитывать [link...]');
+      $container.append($checkbox1).append($label1).append('<br>');
 
       // учитывать cat
-      let checkbox2 = $('<input>')
+      let $checkbox2 = $('<input>')
           .attr({type: 'checkbox', id: 'check_pos-cat'})
           .prop('checked', $settings.cat)
           .on('change', function () {
             $settings.cat = $(this).is(':checked');
             saveSettings();
           });
-      let label2 = $('<label></label>').attr({for: 'check_pos-cat'}).text('Учитывать [url=cat...]');
-      $container.append(checkbox2).append(label2).append('<br>');
+      let $label2 = $('<label></label>').attr({for: 'check_pos-cat'}).text('Учитывать [url=cat...]');
+      $container.append($checkbox2).append($label2).append('<br>');
     }
 
     // группировать по должности
-    let groupByCheckbox = $('<input>')
+    let $groupByCheckbox = $('<input>')
         .attr({type: 'checkbox', id: 'check_pos-group_by'})
         .prop('checked', $settings.group_by)
         .on('change', function () {
@@ -206,30 +205,30 @@
           $columnInputContainer.toggle();
           $('#dynamic-br').toggle(!$settings.group_by);
         });
-    let groupByLabel = $('<label></label>').attr({for: 'check_pos-group_by'}).text('Группировать по должности');
-    $container.append(groupByCheckbox).append(groupByLabel);
+    let $groupByLabel = $('<label></label>').attr({for: 'check_pos-group_by'}).text('Группировать по должности');
+    $container.append($groupByCheckbox).append($groupByLabel);
 
     // поле для ввода количества столбцов
     let $columnInputContainer = $('<div></div>');
-    let columnInput = $('<input>')
+    let $columnInput = $('<input>')
         .attr({type: 'number', id: 'check_pos-columns', min: '1', max: '10'})
         .val($settings.columns)
         .on('change', function () {
           $settings.columns = $(this).val();
           saveSettings();
         });
-    let columnLabel = $('<label></label>').attr({for: 'check_pos-columns'}).text('Количество столбцов:');
-    $columnInputContainer.append(columnLabel).append(columnInput);
+    let $columnLabel = $('<label></label>').attr({for: 'check_pos-columns'}).text('Количество столбцов:');
+    $columnInputContainer.append($columnLabel).append($columnInput);
     $container.append($columnInputContainer);
 
-    let button = $('<input>')
+    let $button = $('<input>')
         .attr({type: 'button', id: 'check_pos-checking', value: 'Проверить'})
         .on('click', () => checking(location));
-    $container.append('<br id="dynamic-br">').append(button);
+    $container.append('<br id="dynamic-br">').append($button);
 
     // для вывода уведомлений
-    let notification = $('<div></div>').attr({id: 'check_pos-notification-container'});
-    $container.append(notification);
+    let $notification = $('<div></div>').attr({id: 'check_pos-notification-container'});
+    $container.append($notification);
 
     if (location === 'blog') {
       $('#creation_form').append($container);
@@ -316,22 +315,22 @@
 
     // добавляем кнопки сброса и копирования ID
     if (!$('#check_pos-reset-selection').length) {
-      let button = $('<input>')
+      let $button = $('<input>')
           .attr({type: 'button', id: 'check_pos-reset-selection', value: 'Сбросить выделение'})
           .on('click', resetSelection);
-      $resultContainer.append(button);
+      $resultContainer.append($button);
 
-      button = $('<input>')
+      $button = $('<input>')
           .attr({type: 'button', id: 'check_pos-copy-ids', value: 'Скопировать ID'})
           .css({marginLeft: '10px'})
           .on('click', copyIds);
-      $resultContainer.append(button);
+      $resultContainer.append($button);
 
-      button = $('<input>')
+      $button = $('<input>')
           .attr({type: 'button', id: 'check_pos-copy-names', value: 'Скопировать ID и имя'})
           .css({marginLeft: '10px'})
           .on('click', copyNames);
-      $resultContainer.append(button);
+      $resultContainer.append($button);
     }
 
     // добавляем таблицы
@@ -351,7 +350,7 @@
     }
 
     // чекбокс и поле ввода для "Удалены"
-    let deletedCheckbox = $('<input>')
+    let $deletedCheckbox = $('<input>')
         .attr({type: 'checkbox', id: 'check_pos-deleted'})
         .prop('checked', $settings.deleted)
         .on('change', function () {
@@ -359,14 +358,14 @@
           saveSettings();
         });
 
-    let deletedInput = $('<input>')
+    let $deletedInput = $('<input>')
         .attr({type: 'text', id: 'check_pos-deleted-input'})
         .val(noName.map(player => player.id).join(', '));
 
     $resultContainer
-        .append(deletedCheckbox)
+        .append($deletedCheckbox)
         .append(' Удалены:')
-        .append(deletedInput)
+        .append($deletedInput)
         .append('<br>');
 
     renderNoPositions(noPosition);
@@ -493,7 +492,7 @@
       let $headerRow = $('<tr></tr>');
       group.forEach(position => {
         if (players[position]) {
-          let positionCheckbox = $('<input>')
+          let $positionCheckbox = $('<input>')
               .attr({ type: 'checkbox', class: 'check_pos-position-checkbox' })
               .prop('checked', $settings.selected_position.includes(position))
               .on('change', function () {
@@ -508,11 +507,11 @@
                 $(`.check_pos-player-checkbox[data-position="${position}"]`).prop('checked', isChecked);
               });
 
-          let headerContainer = $('<div></div>')
+          let $headerContainer = $('<div></div>')
               .append($('<span></span>').text(position))
-              .append(positionCheckbox);
-          let headerCell = $('<th></th>').append(headerContainer);
-          $headerRow.append(headerCell);
+              .append($positionCheckbox);
+          let $headerCell = $('<th></th>').append($headerContainer);
+          $headerRow.append($headerCell);
         }
       });
       $table.append($headerRow);
@@ -524,7 +523,7 @@
           let $cell = $('<td></td>');
 
           if (player) {
-            let playerCheckbox = $('<input>')
+            let $playerCheckbox = $('<input>')
                 .attr({
                   type: 'checkbox',
                   class: 'check_pos-player-checkbox',
@@ -533,7 +532,7 @@
                 })
                 .prop('checked', $settings.selected_position.includes(position));
 
-            $cell.append(playerCheckbox).append(' ')
+            $cell.append($playerCheckbox).append(' ')
                 .append($('<span></span>').text(player.id))
                 .append($('<span></span>').text(player.name));
           } else {
@@ -561,7 +560,7 @@
       let maxRows = players.length;
       let $table = $('<table></table>').addClass('check_pos-results-table');
 
-      let positionCheckbox = $('<input>')
+      let $positionCheckbox = $('<input>')
           .attr({type: 'checkbox', class: 'check_pos-position-checkbox'})
           .prop('checked', $settings.selected_position.includes('все'))
           .on('change', function () {
@@ -576,17 +575,17 @@
             $(`.check_pos-player-checkbox[data-position="all"]`).prop('checked', isChecked);
           });
 
-      let headerContainer = $('<div></div>')
+      let $headerContainer = $('<div></div>')
           .append($('<span></span>').text('Все игроки'))
-          .append(positionCheckbox);
-      let headerCell = $('<th></th>').append(headerContainer);
-      let headerRow = $('<tr></tr>').append(headerCell);
-      $table.append(headerRow);
+          .append($positionCheckbox);
+      let $headerCell = $('<th></th>').append($headerContainer);
+      let $headerRow = $('<tr></tr>').append($headerCell);
+      $table.append($headerRow);
 
       players.forEach((player, i) => {
         let $row = $('<tr></tr>');
 
-        let playerCheckbox = $('<input>')
+        let $playerCheckbox = $('<input>')
             .attr({
               type: 'checkbox',
               class: 'check_pos-player-checkbox',
@@ -595,7 +594,7 @@
             })
             .prop('checked', $settings.selected_position.includes('все'));
 
-        let $cell = $('<td></td>').append(playerCheckbox)
+        let $cell = $('<td></td>').append($playerCheckbox)
             .append(' ')
             .append($('<span></span>').text(player.id))
             .append($('<span></span>').text(player.name))
@@ -621,7 +620,7 @@
       let maxRows = noPosition.length;
       let $table = $('<table></table>').addClass('check_pos-results-table');
 
-      let positionCheckbox = $('<input>')
+      let $positionCheckbox = $('<input>')
           .attr({type: 'checkbox', class: 'check_pos-position-checkbox'})
           .prop('checked', $settings.selected_position.includes('иноплеменные'))
           .on('change', function () {
@@ -638,7 +637,7 @@
 
       let $headerContainer = $('<div></div>')
           .append($('<span></span>').text('Не в племени/клане'))
-          .append(positionCheckbox);
+          .append($positionCheckbox);
       let $headerCell = $('<th></th>').append($headerContainer);
       let $headerRow = $('<tr></tr>').append($headerCell);
       $table.append($headerRow);
