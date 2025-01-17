@@ -142,6 +142,14 @@
       $checkButton = $('<input>').attr({type: 'button', id: 'check_pos-button', value: 'Проверка должностей'});
       if (location === 'blog') {
         $('#creation_form').append($checkButton);
+
+        $(document).on("click", "#creation_form [type='submit']", function () {
+          const $container = $('#check_pos-container');
+          if ($container) {
+            $container.remove();
+          }
+        });
+
       } else {
         let $input = $('<input>').attr({ type: 'text', id: 'creation-text' });
         let $label = $('<label></label>').attr({for: 'creation-text'}).text('Введите один или несколько ID:');
