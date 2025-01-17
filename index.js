@@ -15,20 +15,20 @@
   const $scriptStyle = $('<style></style>').attr({id: 'checking_positions-style'}).text(`
     /* Проверка должностей */
     #check_pos-container {
-        padding: 5px 10px;
+        padding: 0.3rem 0.7rem;
         max-width: 900px;
     }
     #check_pos-container > * {
-        margin: 5px 0;
+        margin: 0.3rem 0;
     }
     #check_pos-container > input[type="checkbox"], #check_pos-results-table td input[type="checkbox"], label[for="creation-text"] {
-        margin-right: 5px !important;
+        margin-right: 0.3rem !important;
     }
     #check_pos-container input[type="number"] {
-        margin-left: 5px !important;
+        margin-left: 0.3rem !important;
     }
     #check_pos-container > div:first-of-type {
-        padding-left: 18px;
+        padding-left: 1.25rem;
     }
     
     .progress-bar {
@@ -39,7 +39,7 @@
         border-radius: 5px;
         overflow: hidden;
         position: relative;
-        margin: 5px 0;
+        margin: 0.3rem 0;
     }
     .progress-fill {
         width: 0%;
@@ -66,7 +66,7 @@
     
     .check_pos-results-table th {
         border: 1px solid;
-        padding: 8px;
+        padding: 0.5rem;
         text-align: left;
     }
     .check_pos-results-table div {
@@ -76,7 +76,7 @@
     }
     .check_pos-results-table tr td {
         border: 1px solid;
-        padding: 5px;
+        padding: 0.3rem;
         border-bottom: none;
         border-top: none;
     }
@@ -87,17 +87,17 @@
     }
     .check_pos-results-table tr > td > span:nth-of-type(2) {
         display: inline-block;
-        padding-left: 10px;
+        padding-left: 0.7rem;
     }
     .check_pos-results-table tr > td > span:nth-of-type(3) {
         display: inline-block;
-        padding-left: 10px;
+        padding-left: 0.7rem;
         font-style: italic;
     }
     
     #check_pos-notification {
-        margin: 5px;
-        padding: 5px;
+        margin: 0.3rem;
+        padding: 0.3rem;
         border-radius: 10px;
         width: 270px;
         background: rgba(255, 255, 255, 0.5);
