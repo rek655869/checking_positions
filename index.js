@@ -2,7 +2,7 @@
 // @name         Проверка должностей
 // @author       rek655869
 // @license      MIT
-// @version      2.0.0-beta1
+// @version      2.0.0
 // @match        https://catwar.su/blog*
 // @match        https://catwar.net/blog*
 // @match        https://catwar.su/my_clan/link
@@ -326,10 +326,16 @@
           .on('click', copyIds);
       $resultContainer.append($button);
 
+        $button = $('<input>')
+            .attr({type: 'button', id: 'check_pos-copy-names', value: 'Скопировать имена'})
+            .css({marginLeft: '10px'})
+            .on('click', copyNames);
+        $resultContainer.append($button);
+
       $button = $('<input>')
-          .attr({type: 'button', id: 'check_pos-copy-names', value: 'Скопировать ID и имя'})
+          .attr({type: 'button', id: 'check_pos-copy-ids-names', value: 'Скопировать ID и имена'})
           .css({marginLeft: '10px'})
-          .on('click', copyNames);
+          .on('click', copyIdsNames);
       $resultContainer.append($button);
     }
 
@@ -397,9 +403,25 @@
   }
 
   /**
-   * Копирование ID и имени в буфер
+   * Копирование имен в буфер
    */
   function copyNames() {
+    let names = $('.check_pos-player-checkbox:checked').map(function () {
+      return $(this).siblings('span').eq(1).text();
+    }).get();
+
+    navigator.clipboard.writeText(names.join('\n')).then(() => {
+      showNotification('Имена успешно скопированы', 3000);
+    }).catch(err => {
+      showNotification("Не удалось скопировать имена");
+      console.error('Ошибка при копировании:', err);
+    });
+  }
+
+  /**
+   * Копирование ID и имен в буфер
+   */
+  function copyIdsNames() {
     let idNamePairs = $('.check_pos-player-checkbox:checked').map(function () {
       let id = $(this).data('player-id');
       let name = $(this).siblings('span').eq(1).text();
