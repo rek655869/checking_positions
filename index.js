@@ -2,7 +2,7 @@
 // @name         Проверка должностей
 // @author       rek655869
 // @license      MIT
-// @version      2.0.1
+// @version      2.0.2
 // @match        https://catwar.su/blog*
 // @match        https://catwar.net/blog*
 // @match        https://catwar.su/my_clan/link
@@ -105,6 +105,8 @@
     }
     `);
 
+  const parser = new DOMParser();
+
   const hostname = window.location.hostname;
   const domainType = hostname.split('.').pop();
 
@@ -165,7 +167,6 @@
       $checkButton.on('click', () => addConfig(location));
     }
   }
-
 
   /**
    * Добавляет настройки проверки должностей
@@ -254,7 +255,6 @@
     $columnInputContainer.toggle($settings.group_by);
     $('#dynamic-br').toggle(!$settings.group_by);
   }
-
 
   /**
    * Основная функция для проверки: получение всех игроков и вывод таблицы
@@ -393,7 +393,6 @@
 
     $checkButton.prop('disabled', false);
   }
-  
 
   /**
    * Копирование ID в буфер
@@ -423,7 +422,6 @@
       });
   }
 
-
   /**
    * Копирование имен в буфер
    */
@@ -444,7 +442,6 @@
         console.error('Ошибка при копировании:', err);
       });
   }
-
 
   /**
    * Копирование ID и имен в буфер
@@ -481,7 +478,6 @@
       });
   }
 
-
   /**
    * Получение данных об игроке
    * @param {string} id ID игрока
@@ -504,22 +500,22 @@
       });
 
       const responseText = await data.text();
+      const doc = parser.parseFromString(responseText, 'text/html');
+      const profile = doc.querySelector('.profile-text');
 
-      let name = responseText.match(/<big>[А-яё ]+<\/big>/);
+      let name = profile.querySelector('big');
       if (!name) return { id: id }; // игрок удалён или не существует
+      name = name.textContent.trim();
 
-      name = name.toString().replace(/[<big>\/]+/g, '');
-
-      let position = responseText.match(/<i>[А-яё ]+<\/i>/);
+      let position = profile.querySelector('i');
       if (position) {
-        position = position.toString().replace(/[<i>\/]+/g, '');
+        position = position.textContent.trim();
       }
       return { id: id, name: name, position: position };
     } catch (error) {
       console.error(`Ошибка при получении игрока ${id}: `, error);
     }
   }
-
 
   /**
    * Таблица (таблицы) с разбиением по должностям
@@ -611,7 +607,6 @@
     });
   }
 
-
   /**
    * Таблица без разбиения по должностям
    * @param players список игроков
@@ -672,7 +667,6 @@
       $('#check_pos-result-container').append($table).append('<br>');
     }
   }
-
 
   /**
    * Таблица игроков без должности
@@ -737,7 +731,6 @@
     }
   }
 
-
   /**
    * Убрать выделение на всех чекбоксах
    */
@@ -750,7 +743,6 @@
     $settings.selected_position = [];
     saveSettings();
   }
-
 
   /**
    * Вывод уведомления
@@ -777,5 +769,4 @@
       }, duration);
     }
   }
-  
 })(window, document, jQuery);
