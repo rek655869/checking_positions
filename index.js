@@ -2,7 +2,7 @@
 // @name         Проверка должностей
 // @author       rek655869
 // @license      MIT
-// @version      2.0.0
+// @version      2.0.1
 // @match        https://catwar.su/blog*
 // @match        https://catwar.net/blog*
 // @match        https://catwar.su/my_clan/link
@@ -105,6 +105,9 @@
     }
     `);
 
+  const hostname = window.location.hostname;
+  const domainType = hostname.split('.').pop();
+
   let $settings = JSON.parse(localStorage.getItem('checking_positions-settings')) || {
     link: false,
     cat: false,
@@ -128,7 +131,6 @@
       }
     }
   }).observe(document, { childList: true, subtree: true });
-
 
   /**
    * Добавляет кнопку "Проверка должностей" на страницу редактирования блога
@@ -391,7 +393,7 @@
 
     $checkButton.prop('disabled', false);
   }
-
+  
 
   /**
    * Копирование ID в буфер
@@ -487,24 +489,13 @@
    */
   async function getPlayer(id) {
     try {
-      const data = await fetch('https://catwar.net/cat' + id, {
+      const data = await fetch('https://catwar.' + domainType + '/cat' + id, {
         headers: {
-          accept:
-            'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-          'accept-language': 'ru-RU,ru;q=0.9,en-GB;q=0.8,en;q=0.7,en-US;q=0.6',
-          'cache-control': 'no-cache',
-          'sec-ch-ua': '"Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
-          'sec-ch-ua-mobile': '?0',
-          'sec-ch-ua-platform': '"Windows"',
-          'sec-fetch-dest': 'document',
-          'sec-fetch-mode': 'navigate',
-          'sec-fetch-site': 'same-origin',
-          'sec-fetch-user': '?1',
-          'upgrade-insecure-requests': '1',
+          accept: 'text/html',
           'User-Agent':
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
         },
-        referrer: 'https://catwar.net/top',
+        referrer: 'https://catwar.' + domainType + '/top',
         referrerPolicy: 'strict-origin-when-cross-origin',
         body: null,
         method: 'GET',
