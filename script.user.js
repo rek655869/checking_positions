@@ -2,7 +2,7 @@
 // @name         Проверка должностей
 // @author       rek655869
 // @license      MIT
-// @version      2.0.2
+// @version      2.0.3
 // @match        https://catwar.su/blog*
 // @match        https://catwar.net/blog*
 // @match        https://catwar.su/my_clan/link
@@ -504,9 +504,9 @@
       const responseText = await data.text();
       const doc = parser.parseFromString(responseText, 'text/html');
       const profile = doc.querySelector('.profile-text');
+      if (!profile) return { id: id }; // игрок удалён или не существует
 
       let name = profile.querySelector('big');
-      if (!name) return { id: id }; // игрок удалён или не существует
       name = name.textContent.trim();
 
       let position = profile.querySelector('i');

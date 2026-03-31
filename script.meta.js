@@ -2,7 +2,7 @@
 // @name         Проверка должностей
 // @author       rek655869
 // @license      MIT
-// @version      2.0.2
+// @version      2.0.3
 // @match        https://catwar.su/blog*
 // @match        https://catwar.net/blog*
 // @match        https://catwar.su/my_clan/link
